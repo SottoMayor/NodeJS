@@ -1,51 +1,49 @@
 /*
 
-Rest Parameters...
+Strings!!!
 
-The rest parameter syntax allows us to represent an indefinite number of arguments as an ARRAY.
+We can declare using double quotes or single quotes. Remember that we can mix these 
+two types of quotes in one string! -- "Hello I'm David!".
 
-Rest parameters are the only ones that have not been assigned a separate name. 
-Rest parameters are Array instances, which means that methods such as sort, map, 
-forEach or pop can be applied directly.
+The strings can be multilines!!! We must use ` ` for this!
 
+For cancate strings in JS, we use the symbol + between two string fragments.
+We can also replace only certain words in a string, using the ${X} syntax 
+in the string, where 'X' is a variable or an expression, We must use ` ` for this!
 
 
 */
 
 "use strict";
 
-var array1 = [1, 2, 3];
+console.log("Hello, I'm David!");
 
-var array2 = [array1, 4, 5, 6];
+var msg = `
+helloooo
+muu
+uu
+ltiliiiiines
+express
+ion!!!
+`
 
-var array3 = [...array1, 4, 5, 6];
-
-// look! array2 and array3 are diferents!
-
-console.log(array2);
-
-console.log(array3);
-
-console.log('--------------------');
-
-// copy arrays...
-
-var array4 = [...array3];
-array3[0] = 10;
-
-console.log(array3);// the first element of the array3 now is 10...
-
-console.log(array4); // the array3 is now the array4...
+console.log(msg);
 
 
-console.log('--------------------');
+var name = 'David';
+var surname = ' Sotto Mayor';
+var concate = name + surname;
+console.log(concate);
 
-var avenue = 'Constantino Nery';
-var condominiums = ['Parque dos Ingleses', 'Bosque dos Ingleses', 'Jornalistas', 'Tocantins'];
+var account = 998;
+var total = 132.99;
 
-function neighbordhood(avenue, condominiums) {
-    console.log(avenue);
-    console.log(...condominiums); // if not '...' the condominius names would return an array of condominius.
-}
+var message = `Hello user ${account}, the total is \$ ${total}.`
+console.log(message);
 
-neighbordhood(avenue, condominiums);
+
+var bold = true;
+var hello = `Hello my name is ${(bold) ? '<bold>David</bold>' : 'David'}`;
+
+console.log(hello);
+
