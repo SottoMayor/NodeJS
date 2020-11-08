@@ -1,49 +1,46 @@
 /*
 
-Strings!!!
+Types...
 
-We can declare using double quotes or single quotes. Remember that we can mix these 
-two types of quotes in one string! -- "Hello I'm David!".
+Boolean -> true or false
+Number -> 1 or 1.2
+string -> 'a' or "a"
+Null -> null
+Undefined -> undefined
+Objects -> {} or New Object()
 
-The strings can be multilines!!! We must use ` ` for this!
-
-For cancate strings in JS, we use the symbol + between two string fragments.
-We can also replace only certain words in a string, using the ${X} syntax 
-in the string, where 'X' is a variable or an expression, We must use ` ` for this!
+typeof(element) -> How know the type of an element
 
 
 */
 
 "use strict";
 
-console.log("Hello, I'm David!");
+function typeOf(variable){
 
-var msg = `
-helloooo
-muu
-uu
-ltiliiiiines
-express
-ion!!!
-`
+    console.log(typeof(variable));
 
-console.log(msg);
+}
+
+var a;
+typeOf(a);
+
+var a = null;
+typeOf(a);
+
+var a = 1.2;
+typeOf(a);
+
+var a = true;
+typeOf(a);
+
+var a = 'Hello world';
+typeOf(a);
+
+var a = {'name':'David', 'surname':'Sotto Mayor'};
+typeOf(a);
 
 
-var name = 'David';
-var surname = ' Sotto Mayor';
-var concate = name + surname;
-console.log(concate);
+// OBS: Undefined is equal to null!
 
-var account = 998;
-var total = 132.99;
-
-var message = `Hello user ${account}, the total is \$ ${total}.`
-console.log(message);
-
-
-var bold = true;
-var hello = `Hello my name is ${(bold) ? '<bold>David</bold>' : 'David'}`;
-
-console.log(hello);
-
+console.log(null == undefined);
