@@ -1,46 +1,20 @@
 /*
 
-Types...
+Difference between == and === .
 
-Boolean -> true or false
-Number -> 1 or 1.2
-string -> 'a' or "a"
-Null -> null
-Undefined -> undefined
-Objects -> {} or New Object()
+(a  == b) -> a is equal to b.
 
-typeof(element) -> How know the type of an element
+(a ===  b) -> a is STRICTLY equal to b.
 
 
 */
 
 "use strict";
 
-function typeOf(variable){
+console.log('0' == 0);
 
-    console.log(typeof(variable));
+console.log('0' === 0);
 
-}
+console.log('0' == '0');
 
-var a;
-typeOf(a);
-
-var a = null;
-typeOf(a);
-
-var a = 1.2;
-typeOf(a);
-
-var a = true;
-typeOf(a);
-
-var a = 'Hello world';
-typeOf(a);
-
-var a = {'name':'David', 'surname':'Sotto Mayor'};
-typeOf(a);
-
-
-// OBS: Undefined is equal to null!
-
-console.log(null == undefined);
+console.log('0' === '0');
