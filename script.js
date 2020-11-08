@@ -1,38 +1,47 @@
 /*
 
-Variables in global scope and function scope...
+Rest Parameters...
 
-Values ​​within functions are local, but values ​​in the document's global 
-scope are global. That is, what is declared within the function remains 
-in the function and what is declared in the global scope is for the 
-entire document.
+The rest parameter syntax allows us to represent an indefinite number of arguments as an ARRAY.
+
+Rest parameters are the only ones that have not been assigned a separate name. 
+Rest parameters are Array instances, which means that methods such as sort, map, 
+forEach or pop can be applied directly.
+
+
 
 */
 
 "use strict";
 
-var value = 100
+function sum(...args) { // (1, 2, 3, ..., n) -> [1, 2, 3, ..., n]
 
-function myFunc(value) {
-    value = 0;
-    console.log('local: ' + value);
+    var sum = 0;
+
+    for (var i = 0; i < args.length; i++) {
+
+        sum += args[i];
+
+    }
+
+    return sum;
+
 }
 
-myFunc(value);
+console.log(sum(1, 2, 3, 4, 5));
 
-console.log('global: ' + value);
-
-
-console.log('---------------------------');
+console.log('----------------------');
 
 
-var ok = true;
+function random(socialMedia, ...numbers /*, something else - > ERROR!!!!!*/) {
 
-function badFunction(ok) {
-    ok = false;
-    console.log('local: ' + ok);
+    console.log(socialMedia);
+
+    console.log(numbers);
+
+    /*console.log(something else);*/ // ERROR!!!!!
+
 }
 
-badFunction(ok);
+random('Instagram', 1, 2, 7, 9, 11);
 
-console.log('global: ' + ok);
