@@ -14,34 +14,38 @@ forEach or pop can be applied directly.
 
 "use strict";
 
-function sum(...args) { // (1, 2, 3, ..., n) -> [1, 2, 3, ..., n]
+var array1 = [1, 2, 3];
 
-    var sum = 0;
+var array2 = [array1, 4, 5, 6];
 
-    for (var i = 0; i < args.length; i++) {
+var array3 = [...array1, 4, 5, 6];
 
-        sum += args[i];
+// look! array2 and array3 are diferents!
 
-    }
+console.log(array2);
 
-    return sum;
+console.log(array3);
 
+console.log('--------------------');
+
+// copy arrays...
+
+var array4 = [...array3];
+array3[0] = 10;
+
+console.log(array3);// the first element of the array3 now is 10...
+
+console.log(array4); // the array3 is now the array4...
+
+
+console.log('--------------------');
+
+var avenue = 'Constantino Nery';
+var condominiums = ['Parque dos Ingleses', 'Bosque dos Ingleses', 'Jornalistas', 'Tocantins'];
+
+function neighbordhood(avenue, condominiums) {
+    console.log(avenue);
+    console.log(...condominiums); // if not '...' the condominius names would return an array of condominius.
 }
 
-console.log(sum(1, 2, 3, 4, 5));
-
-console.log('----------------------');
-
-
-function random(socialMedia, ...numbers /*, something else - > ERROR!!!!!*/) {
-
-    console.log(socialMedia);
-
-    console.log(numbers);
-
-    /*console.log(something else);*/ // ERROR!!!!!
-
-}
-
-random('Instagram', 1, 2, 7, 9, 11);
-
+neighbordhood(avenue, condominiums);
