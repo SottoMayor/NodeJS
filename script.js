@@ -1,20 +1,23 @@
 /*
 
-Difference between == and === .
+What is Nan...
 
-(a  == b) -> a is equal to b.
+NaN is Not a Number.
 
-(a ===  b) -> a is STRICTLY equal to b.
 
+isNaN(element) - how to know if an element is Not a Number (NaN)
 
 */
 
 "use strict";
 
-console.log('0' == 0);
+var string = 'abc';
+var number = 4;
 
-console.log('0' === 0);
+var nan = string/number
 
-console.log('0' == '0');
+console.log(nan); //NaN
 
-console.log('0' === '0');
+console.log(NaN == 1); //false
+
+console.log(isNaN(nan));
