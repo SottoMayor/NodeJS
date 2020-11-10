@@ -1,50 +1,36 @@
 /*
 
-loop for, break and continue
+Arrow Functions
 
 */
 
 "use strict";
 
-//for
-var array = [1, 2, 4, 6, 10];
-for (let i = 0; i < array.length; i++) {
-    console.log(array[i]);
-}
+var myName = (name='* Unknow *') => 'My name is ' + name;
 
-console.log('---------');
+console.log(myName());
+console.log(myName('Davizim'));
 
-// break
+var sum = (a, b, c) => {
 
-for (let i = 0; i < 20; i += 3) {
-    if (i == 15) {
-        break
-    };
-    console.log(i)
-}
+    return a + b + c
 
+};
 
-console.log('---------');
+console.log(sum(1, 2, 3));
 
-//continue
+var soma = (...args) => {
 
-for (let i = 0; i < 10; i++){
+    var soma = 0;
 
-    if(i % 2 == 0){
-        continue
-    };
+    for(let i = 0; i < args.length; i++){
 
-    console.log(i);
+        soma += args[i]
+
+    }
+
+    return soma;
 
 }
 
-
-console.log('-------');
-
-//for-in;
-
-var names = 'David Sotto Mayor Maciel Fernandes'.split(' ');
-
-for (let name in names){
-    console.log(names[name]);
-}
+console.log(soma(1, 2, 3, 4, 5));
