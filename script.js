@@ -1,22 +1,28 @@
 /*
 
-Functions Closures 
+Destructuring
 
 */
 
 "use strict";
 
-function hello(name) {
+const obj = {first: 'David', age: 20, last: 'Fernandes'};
 
-    var text = 'hello ' + name;
-    return function () {
-        console.log(text);
-    }
+const{first: something, last} = obj;
 
-};
+console.log(something);
+console.log(last);
 
-var helloDavid = hello('David');
 
-helloDavid();
+console.log('------------');
+
+
+var array = ['David', 'Fernandes'];
+var [name, lastName] = array;
+
+console.log(name);
+console.log(lastName);
+
+
 
 
