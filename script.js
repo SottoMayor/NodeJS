@@ -1,36 +1,39 @@
 /*
 
-Arrow Functions
+Arrays - .map(), .forEach(), .slice(), .push(), .pop()
 
 */
 
 "use strict";
 
-var myName = (name='* Unknow *') => 'My name is ' + name;
+var sports = ['football', 'voleyball', 'tenis', 'baseball'];
 
-console.log(myName());
-console.log(myName('Davizim'));
+console.log(sports);
 
-var sum = (a, b, c) => {
 
-    return a + b + c
+console.log('------------');
 
-};
+//Using map
 
-console.log(sum(1, 2, 3));
+var favSports = sports.map(sport => 'My favorite sport is ' + sport); //new array!
 
-var soma = (...args) => {
+console.log(favSports);
 
-    var soma = 0;
 
-    for(let i = 0; i < args.length; i++){
 
-        soma += args[i]
+console.log('------------');
 
-    }
+//forEach();
 
-    return soma;
+sports.forEach(function(item, index){
+    console.log(`${item}: ${index}`);
+});
 
-}
+var sports = ['football', 'voleyball', 'tenis', 'baseball'];
 
-console.log(soma(1, 2, 3, 4, 5));
+console.log('------------');
+
+var sameArray = sports.slice();
+console.log(sameArray);
+
+console.log('------------');
