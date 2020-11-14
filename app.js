@@ -14,7 +14,6 @@ const server = http.createServer((req, res) => {
         return res.end();
     };
 
-    //Parsing Requests Bodies
     var method = req.method;
     if (url === '/message' && method === 'POST'){
         const body = [];
@@ -26,12 +25,14 @@ const server = http.createServer((req, res) => {
             const parsedBody = Buffer.concat(body).toString();
             //console.log(parsedBody);
             var message = parsedBody.split('=')[1];
-            fs.writeFileSync('message.txt', message);
+            //Optimizing the Write File Code...
+            fs.writeFile('message.txt', message, err =>{
+                res.statusCode = 302;
+                res.setHeader('location', '/');
+                return res.end();
+            });
         });
-        res.statusCode = 302;
-        res.setHeader('location', '/');
-        return res.end();
-    }
+    };
 
     res.setHeader('Content-Type', 'text/html');
     res.write('<html>');
