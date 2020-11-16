@@ -5,7 +5,7 @@ const app = express();
 
 const bodyParser = require('body-parser');
 
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({extended: false}));
 
 //Routes
 app.use('/add-product',(req, res, next) => {
@@ -14,7 +14,7 @@ app.use('/add-product',(req, res, next) => {
 
 });
 
-app.use('/product', (req, res, next) => {
+app.post('/product', (req, res, next) => {
 
     console.log(req.body);
     res.redirect('/');
