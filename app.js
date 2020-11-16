@@ -1,32 +1,29 @@
 const express = require('express');
 const app = express();
 
-/*
-app.use((req, res, next) => {
+//Parsing body
 
-    console.log('Hello World... I am the first middleware!');
+const bodyParser = require('body-parser');
 
-    next();
+app.use(bodyParser.urlencoded());
+
+//Routes
+app.use('/add-product',(req, res, next) => {
+
+    res.send('<form action="/product" method="POST"><input type="text" name="title"><button type="submit">Add Product</button></form>');
+
 });
 
-app.use((req, res, next) => {
+app.use('/product', (req, res, next) => {
 
-    console.log('Hello World... I am the last middleware!');
+    console.log(req.body);
+    res.redirect('/');
 
-    res.send('<h2>I am the Boss!</h2>');
-});
-*/
-
-app.use('/users',(req, res, next) => {
-
-    console.log('Users page!')
-    res.send('<h2>Hello... USERS page!</h2>');
 
 });
 
 app.use('/',(req, res, next) => {
 
-    console.log('HOME page!')
     res.send('<h2>Hi... HOME page!</h2>');
 
 });
