@@ -1,29 +1,28 @@
-//rewriting code with expressJS tools
-
-/*const http = require('http');*/ //we don't need anymore!
-
 const express = require('express');
 const app = express();
 
-app.use((req, res, next) => {
+//Handling Different Routes
 
-    console.log('I\'m a middleware!');
-    
+app.use('/', (req, res, next) =>{
+
+    console.log('It always will run!');
+
     next();
-});
-
-app.use((req, res, next) => {
-
-    console.log('I\'m a another middleware! ihullll!');
-    res.send('<h2>Hello World!!!</h2>')
 
 });
 
-//we don't need anymore!
-/*
-const server = http.createServer(app);
+app.use('/add-product', (req, res, next) => {
 
-server.listen(3000);
-*/
+    res.send('<h2>The ADD PRODUCT page!</h2>');
+    console.log('ADD PRODUCT page!');
+
+});
+
+app.use('/', (req, res, next) => {
+
+    res.send('<h2>The HOME page!</h2>');
+    console.log('HOME page');
+
+});
 
 app.listen(3000);
