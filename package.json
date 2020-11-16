@@ -1,0 +1,24 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "Complete NodeJs Guide",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "start-server": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SottoMayor/NodeJS.git"
+  },
+  "author": "David Sotto Mayor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SottoMayor/NodeJS/issues"
+  },
+  "homepage": "https://github.com/SottoMayor/NodeJS#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
