@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const app = express();
 
@@ -13,7 +14,7 @@ app.use(shopRoutes);
 
 app.use((req, res, next) => {
 
-    res.send('<h1 style="color:red;"> Oh Oouh... Page not Found! :(( </h1>');
+    res.status(404).sendFile(path.join(__dirname, 'views', 'page-not-found.html'));
 
 });
 
