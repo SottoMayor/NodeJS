@@ -9,6 +9,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
+const db = require('./util/database');
+
+db.execute('SELECT * FROM products');
 
 app.set('view engine','ejs');
 app.set('views', 'views');
