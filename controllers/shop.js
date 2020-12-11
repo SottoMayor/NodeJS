@@ -26,14 +26,20 @@ exports.getProduct = (req, res, next) => {
 }
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll(products => {
+
+  Product.fetchAll()
+  .then( ( [rows, fieldData] ) => {
     res.render('shop/product-list', {
-      prods: products,
+      prods: rows,
       docTitle: 'Shop',
       path: '/products'
-    });
-  });
-};
+    })
+  })
+  .catch(
+    err => console.log(err)
+  );
+
+}
 
 exports.getCart = (req, res, next) => {
   Cart.getCart( cart => {
