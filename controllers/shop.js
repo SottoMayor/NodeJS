@@ -18,12 +18,18 @@ exports.getIndex = (req, res, next) => {
 exports.getProduct = (req, res, next) => {
 
   const prodId = req.params.productId;
-  Product.findById(prodId, product => {
-    res.render('shop/product-detail', { product: product, docTitle: 'Details about ' + product.title, path:'/products' })
-  });
+  Product.findById(prodId)
+  .then( ([product]) => {
+    // product is an array still! So we must set product[0].
+    res.render('shop/product-detail', 
+    { product: product[0], 
+      docTitle: 'Details about ' + product.title, 
+      path:'/products' 
+    })
+  })
+  .catch(err => console.log(err));
 
-
-}
+};
 
 exports.getProducts = (req, res, next) => {
 
