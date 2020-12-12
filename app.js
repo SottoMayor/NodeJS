@@ -23,7 +23,6 @@ app.use(pageNotFound.pageNotFound);
 
 sequelize.sync()
     .then( result => {
-    console.log('Created Product');
     app.listen(3000);
 })
     .catch( err => { console.log(err) });
