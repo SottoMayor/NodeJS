@@ -13,7 +13,6 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  //Magic Method, because User has many Product or Product belongs to User!
   req.user.createProduct({
     title: title,
     price: price,
