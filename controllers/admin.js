@@ -13,14 +13,17 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  Product.create({
+  //Magic Method, because User has many Product or Product belongs to User!
+  req.user.createProduct({
     title: title,
     price: price,
     imageUrl: imageUrl,
-    description: description
+    description: description,
+    userId: req.user.id
   })
-  .then(result => {console.log(result);
-     res.redirect('/admin/products');
+  .then(result => {
+    console.log('Created product!');
+    res.redirect('/admin/products');
     })
   .catch( err => {console.log(err)} );
 };
