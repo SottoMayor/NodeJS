@@ -5,6 +5,34 @@
 
     <%- include('../includes/navigation.ejs') %>
 
-    <h2>Your orders...</h2>
+    <main>
+        <% if(order.length <= 0) { %>
+
+            <h2>Nothing Here!</h2>
+
+        <% } else {%>
+
+            <ul>
+
+                <% orders.forEach(order => { %>
+
+                    <li>
+                        <h3># <%=order.id %> </h3>
+                        <ul>
+                            <% order.products.forEach( product=> { %> 
+
+                                <li> <%= product.title %> ( <%= product.orderItem.quantity %> )</li> 
+
+                            <% }) %>
+                        </ul>
+                    </li>
+
+                <% }) %>
+
+            </ul>
+
+        <% } %>
+
+    </main>
 
 <%- include('../includes/end.ejs') %>
