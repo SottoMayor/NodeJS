@@ -7,10 +7,11 @@ let _db;
 // connecting and storing the connecting into the database
 const mongoConnect = (callback) => {
 
-    MongoClient.connect('mongodb+srv://david:davidMongoDB@cluster0.bhiv4.mongodb.net/shop?retryWrites=true&w=majority')
+    MongoClient.connect('mongodb+srv://david:davidMongoDB@cluster0.bhiv4.mongodb.net/shop?retryWrites=true&w=majority', { useUnifiedTopology: true })
     .then(client => {
         console.log('Connected!!!');
         _db = client.db();
+        callback();
     })
     .catch(err => {
         console.log(err);

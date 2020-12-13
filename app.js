@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 const adminRoutes = require('./routes/admin');
 //const shopRoutes = require('./routes/shop');
 
-const mongoConnect = require('./util/database');
+const mongoConnect = require('./util/database').mongoConnect;
 
 app.set('view engine','ejs');
 app.set('views', 'views');
@@ -21,8 +21,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(pageNotFound.pageNotFound);
 
+app.use((req, res, next) =>  {
+    next();
+})
+
 mongoConnect( () => {
 
-    app.listen(3000);
+    console.log('listening!')
+    app.listen(3000);     
 
 });
