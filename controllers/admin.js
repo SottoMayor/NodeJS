@@ -67,10 +67,10 @@ exports.postEditProduct = (req, res, next) => {
   })
   .catch(err => {console.log(err)});
 }
+*/
 
 exports.getProducts = (req, res, next) => {
-  req.user
-  .getProducts()
+  Product.fetchAll()
   .then(products => {
     res.render('admin/products', {
       prods: products,
@@ -81,7 +81,7 @@ exports.getProducts = (req, res, next) => {
   .catch(err => {console.log(err)})
 
 }
-
+/*
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
 
