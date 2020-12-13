@@ -1,14 +1,31 @@
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 
+let _db;
+
+
+// connecting and storing the connecting into the database
 const mongoConnect = (callback) => {
 
-    MongoClient.connect('mongodb+srv://david:davidMongoDB@cluster0.bhiv4.mongodb.net/NodeJs-teste?retryWrites=true&w=majority')
-    .then(result => {
+    MongoClient.connect('mongodb+srv://david:davidMongoDB@cluster0.bhiv4.mongodb.net/shop?retryWrites=true&w=majority')
+    .then(client => {
         console.log('Connected!!!');
-        callback(result);
+        _db = client.db();
     })
-    .catch(err => {console.log(err)});
+    .catch(err => {
+        console.log(err);
+        throw err;
+    });
 };
 
-module.exports = mongoConnect;
+// return the access to the database, if it exists.
+const getDB = () => {
+    if(_db){
+        return _db;
+    }
+
+    throw 'No database found!!';
+}
+
+exports.mongoConnect = mongoConnect;
+exports.getDB = getDB;

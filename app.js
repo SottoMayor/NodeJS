@@ -21,9 +21,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(pageNotFound.pageNotFound);
 
-mongoConnect( (client) => {
+mongoConnect( () => {
 
-    console.log(client);
     app.listen(3000);
 
 });

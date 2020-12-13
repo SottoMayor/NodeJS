@@ -1,4 +1,4 @@
-const mongoConnect = require('../util/database');
+const getDB = require('../util/database').getDB;
 
 class Product{
 
@@ -10,31 +10,10 @@ class Product{
   };
 
   save(){
-    
+
   };
 
 } 
 
-const Product = sequelize.define('product', {
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    allowNull: false,
-    primaryKey:  true
-  },
-  title: Sequelize.STRING,
-  price:{
-    type: Sequelize.DOUBLE,
-    allowNull: false
-  },
-  imageUrl:{
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  description:{
-    type: Sequelize.STRING,
-    allowNull: false
-  }
-})
 
 module.exports = Product
