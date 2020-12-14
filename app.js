@@ -11,6 +11,8 @@ const shopRoutes = require('./routes/shop');
 
 const mongoConnect = require('./util/database').mongoConnect;
 
+const User = require('./models/user');
+
 app.set('view engine','ejs');
 app.set('views', 'views');
 
@@ -22,12 +24,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(pageNotFound.pageNotFound);
 
 app.use((req, res, next) =>  {
-    next();
+    User.findById('5fd778c43d7609732a1e6065')
+    .then( user => {
+        req.user = user
+        next();
+    })
+    .catch( err => {
+        console.log(err);
+        next();
+    })
+        
 })
 
 mongoConnect( () => {
-
-    console.log('listening!')
     app.listen(3000);     
-
 });
