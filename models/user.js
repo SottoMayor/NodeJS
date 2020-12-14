@@ -2,8 +2,8 @@
 const mongodb = require('mongodb');
 
  class User{
-    constructor(name, email){
-        this.name = name;
+    constructor(username, email){
+        this.username = username;
         this.email = email;
     }
 
@@ -14,7 +14,6 @@ const mongodb = require('mongodb');
 
     static findById(userId){
         const db = getDB();
-        //return db.collection('users').find({_id: new mongodb.ObjectId(userId)}).next(); OR...
         return db.collection('users').findOne({_id: new mongodb.ObjectId(userId)});
     }
 }

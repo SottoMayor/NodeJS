@@ -16,6 +16,17 @@ const User = require('./models/user');
 app.set('view engine','ejs');
 app.set('views', 'views');
 
+app.use((req, res, next) =>  {
+    User.findById('5fd778c43d7609732a1e6065')
+    .then( user => { 
+    req.user = user;
+    next();
+    })
+    .catch( err => {
+        console.log(err);
+    })
+})
+
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
@@ -23,18 +34,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(pageNotFound.pageNotFound);
 
-app.use((req, res, next) =>  {
-    User.findById('5fd778c43d7609732a1e6065')
-    .then( user => {
-        req.user = user
-        next();
-    })
-    .catch( err => {
-        console.log(err);
-        next();
-    })
-        
-})
 
 mongoConnect( () => {
     app.listen(3000);     
