@@ -64,6 +64,17 @@ const mongodb = require('mongodb');
         .updateOne({_id: new mongodb.ObjectId(this._id)}, {$set: {cart: { items: updatedCart }}})
     }
 
+    addOrder(){
+        //add a new order and deleting items cart...
+        const db = getDB()
+        return db.collection('orders').insertOne(this.cart)
+        .then(() => {
+            this.cart = {items: []};
+            return db.collection('users').updateOne({_id: new mongodb.ObjectId(this._id)},
+            {$set: {cart: { items : [] } } })
+        })
+    }
+
     static findById(userId){
         const db = getDB();
         return db.collection('users').findOne({_id: new mongodb.ObjectId(userId)});
