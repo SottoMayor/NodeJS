@@ -2,8 +2,8 @@
 const mongodb = require('mongodb');
 
  class User{
-    constructor(username, email, cart, id){
-        this.username = username;
+    constructor(name, email, cart, id){
+        this.name = name;
         this.email = email;
         this.cart = cart; // {items: []}
         this._id = id;
@@ -65,9 +65,17 @@ const mongodb = require('mongodb');
     }
 
     addOrder(){
-        //add a new order and deleting items cart...
         const db = getDB()
-        return db.collection('orders').insertOne(this.cart)
+        return this.getCart().then(products => {
+            const order = {
+                items: products,
+                user: {
+                    _id: new mongodb.ObjectId(this._id),
+                    name: this.name
+                }   
+            }
+            return db.collection('orders').insertOne(order)
+        })
         .then(() => {
             this.cart = {items: []};
             return db.collection('users').updateOne({_id: new mongodb.ObjectId(this._id)},
