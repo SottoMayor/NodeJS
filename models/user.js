@@ -15,11 +15,12 @@ const mongodb = require('mongodb');
     }
 
     addToCart(product){
+        
         const cartProductIndex = this.cart.items.findIndex(cp => {
             return cp.productId.toString() === product._id.toString() 
         });
         let newQuantity = 1;
-        const updatedCartItems = [... this.cart.items];
+        const updatedCartItems = [...this.cart.items];
 
         if(cartProductIndex >= 0){
             newQuantity = this.cart.items[cartProductIndex].quantity + 1;
@@ -51,6 +52,16 @@ const mongodb = require('mongodb');
                 }
             })
         })
+    }
+
+    deleteItemFromCart(productId){
+        const updatedCart = this.cart.items.filter(item => {
+            return item.productId.toString() !== productId.toString()
+        })
+
+        const db = getDB();
+        return db.collection('users')
+        .updateOne({_id: new mongodb.ObjectId(this._id)}, {$set: {cart: { items: updatedCart }}})
     }
 
     static findById(userId){
