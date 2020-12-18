@@ -1,3 +1,5 @@
+/*
+
 const getDB = require('../util/database').getDB;
 
 const mongodb = require('mongodb');
@@ -68,3 +70,5 @@ class Product{
 
 
 module.exports = Product
+
+ */

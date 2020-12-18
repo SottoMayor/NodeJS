@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
-const mongoConnect = require('./util/database').mongoConnect;
+const mongoose = require('mongoose');
 
 const User = require('./models/user');
 
@@ -35,6 +35,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(pageNotFound.pageNotFound);
 
 
-mongoConnect( () => {
-    app.listen(3000);     
+mongoose.connect('mongodb+srv://david:davidMongoDB@cluster0.bhiv4.mongodb.net/test?retryWrites=true&w=majority', { useUnifiedTopology: true, useNewUrlParser: true })
+.then(() => {
+    app.listen(3000)
+})
+.catch((err) => {
+    console.log(err)
 });
