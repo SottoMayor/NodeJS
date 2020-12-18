@@ -11,11 +11,12 @@ const shopRoutes = require('./routes/shop');
 
 const mongoose = require('mongoose');
 
-const User = require('./models/user');
+//const User = require('./models/user');
 
 app.set('view engine','ejs');
 app.set('views', 'views');
 
+/* 
 app.use((req, res, next) =>  {
     User.findById('5fd9ff7fdd7a18b0375f4b46')
     .then( user => { 
@@ -26,6 +27,7 @@ app.use((req, res, next) =>  {
         console.log(err);
     })
 })
+*/
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
@@ -35,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(pageNotFound.pageNotFound);
 
 
-mongoose.connect('mongodb+srv://david:davidMongoDB@cluster0.bhiv4.mongodb.net/test?retryWrites=true&w=majority', { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect('mongodb+srv://david:davidMongoDB@cluster0.bhiv4.mongodb.net/shop?retryWrites=true&w=majority', { useUnifiedTopology: true, useNewUrlParser: true })
 .then(() => {
     app.listen(3000)
 })
