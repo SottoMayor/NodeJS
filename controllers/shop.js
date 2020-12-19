@@ -32,7 +32,7 @@ exports.getProduct = (req, res, next) => {
 exports.getProducts = (req, res, next) => {
 
   Product.find()
-  .then(products => {
+  .then(products => { 
     res.render('shop/product-list', {
       prods: products,
       docTitle: 'Shop',
