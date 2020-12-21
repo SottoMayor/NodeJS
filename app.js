@@ -12,11 +12,16 @@ const authRoutes = require('./routes/auth');
 
 const mongoose = require('mongoose');
 
+const session = require('express-session')
+
 const User = require('./models/user');
 
 app.set('view engine','ejs');
 app.set('views', 'views');
 
+app.use(
+    session({secret: 'my secret', resave: false, saveUninitialized: false})
+);
 
 app.use((req, res, next) =>  {
     User.findById('5fde5726e01b330b60a66049')
