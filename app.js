@@ -12,7 +12,15 @@ const authRoutes = require('./routes/auth');
 
 const mongoose = require('mongoose');
 
-const session = require('express-session')
+const MONGODB_URI = 'mongodb+srv://david:davidMongoDB@cluster0.bhiv4.mongodb.net/shop?retryWrites=true&w=majority';
+
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
+
+const store = new MongoDBStore({
+    uri: MONGODB_URI,
+    collection: 'sessions'
+})
 
 const User = require('./models/user');
 
@@ -20,7 +28,7 @@ app.set('view engine','ejs');
 app.set('views', 'views');
 
 app.use(
-    session({secret: 'my secret', resave: false, saveUninitialized: false})
+    session({secret: 'my secret', resave: false, saveUninitialized: false, store: store})
 );
 
 app.use((req, res, next) =>  {
@@ -44,7 +52,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(pageNotFound.pageNotFound);
 
 
-mongoose.connect('mongodb+srv://david:davidMongoDB@cluster0.bhiv4.mongodb.net/shop?retryWrites=true&w=majority', { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect(MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true })
 .then(() => {
 
     User.findOne().then( user => {
