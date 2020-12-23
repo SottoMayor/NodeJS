@@ -61,20 +61,6 @@ app.use(pageNotFound.pageNotFound);
 
 mongoose.connect(MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true })
 .then(() => {
-
-    User.findOne().then( user => {
-        if (!user){
-            const user = new User({
-                name: 'David',
-                email: 'david@teste.com',
-                cart: {
-                    items: []
-                }
-            });
-            user.save();
-        }
-    })
-
     app.listen(3000)
 })
 .catch((err) => {
