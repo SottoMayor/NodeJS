@@ -31,3 +31,11 @@ exports.postLogout = (req, res, next) => {
     res.redirect('/');
   })
 }
+
+exports.getSignup = (req, res, next) => {
+  res.render('auth/signup', { docTitle: 'Signup', path: '/signup', isAuthenticated: false })
+}
+
+exports.postSignup = (req, res, next) => {
+  res.redirect('/');
+}
