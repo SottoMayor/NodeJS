@@ -51,15 +51,15 @@ exports.postSignup = (req, res, next) => {
       return res.redirect('/signup');
     };
 
-    return bcrypt.hash(password, 12);    
-  })
-  .then( cryptPassword => {
-    const user = new User({email: email, password: cryptPassword, cart: {items: []} });
+    return bcrypt.hash(password, 12)
+    .then( cryptPassword => {
+      const user = new User({email: email, password: cryptPassword, cart: {items: []} });
+      return user.save();
+    })
+    .then(() => {
+      res.redirect('/login');
+    });
 
-    return user.save();
-  })
-  .then(() => {
-    res.redirect('/login');
   })
   .catch( err => {
     console.log(err);
