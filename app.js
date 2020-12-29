@@ -24,6 +24,8 @@ const store = new MongoDBStore({
 
 const User = require('./models/user');
 
+const flash = require('connect-flash');
+
 const csrf = require('csurf');
 const csrfProtection = csrf();
 
@@ -35,6 +37,7 @@ app.use(
 );
 
 app.use(csrfProtection);
+app.use(flash());
 
 app.use( (req, res, next) => {
 

@@ -23,8 +23,7 @@ exports.getProduct = (req, res, next) => {
     res.render('shop/product-detail', 
     { product: product, 
       docTitle: 'Details about ' + product.title, 
-      path:'/products',
-      isAuthenticated: req.session.isLoggedIn 
+      path:'/products' 
     })
   })
   .catch(err => console.log(err));
@@ -38,8 +37,7 @@ exports.getProducts = (req, res, next) => {
     res.render('shop/product-list', {
       prods: products,
       docTitle: 'Shop',
-      path: '/products',
-      isAuthenticated: req.session.isLoggedIn
+      path: '/products'
     })
   })
   .catch(
@@ -54,8 +52,7 @@ exports.getCart = (req, res, next) => {
   .execPopulate()
   .then(user => {
       const products = user.cart.items;
-      res.render('shop/cart', { docTitle: 'Cart Page', path: '/cart', products: products,
-      isAuthenticated: req.session.isLoggedIn});
+      res.render('shop/cart', { docTitle: 'Cart Page', path: '/cart', products: products});
     })
   .catch(err => {console.log(err)});
 
