@@ -24,12 +24,17 @@ const store = new MongoDBStore({
 
 const User = require('./models/user');
 
+const csrf = require('csurf');
+const csrfProtection = csrf();
+
 app.set('view engine','ejs');
 app.set('views', 'views');
 
 app.use(
     session({secret: 'my secret', resave: false, saveUninitialized: false, store: store})
 );
+
+app.use(csrfProtection);
 
 app.use( (req, res, next) => {
 
