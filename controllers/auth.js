@@ -2,6 +2,9 @@ const User = require('../models/user');
 
 const bcrypt = require('bcryptjs');
 
+const sendgridMailer = require('@sendgrid/mail');
+
+sendgridMailer.setApiKey('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');
 
 exports.getLogin = (req, res, next) => {
 
@@ -79,8 +82,30 @@ exports.postSignup = (req, res, next) => {
         })
         .then(() => {
           res.redirect('/login');
-        });
 
+          const message = {
+            to: email,
+            from: 'ddsmmf@gmail.com', // this email must be the SAME of SENDGRID!!!!!
+            subject: 'Signup succeeded!',
+            text: 'some text here!',
+            html: `
+            <h1> You successfully sign up! </h1>
+            <p> Thank you son! </p>
+            `
+          }
+
+          sendgridMailer.send(message)
+          .then( result => {
+            console.log('Email Sent')
+          })
+          .catch(err => {
+            console.log(err)
+          })
+
+        })
+        .catch(err => {
+          console.log(err);
+        });
     })
     .catch(err => {
       console.log(err);
