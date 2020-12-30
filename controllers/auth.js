@@ -1,5 +1,7 @@
 const User = require('../models/user');
 
+const crypto = require('crypto');
+
 const bcrypt = require('bcryptjs');
 
 const sendgridMailer = require('@sendgrid/mail');
@@ -128,4 +130,54 @@ exports.getReset = (req, res, next) => {
     errorMessage: message
   })
 
+}
+
+exports.postReset = (req, res, next) => {
+  crypto.randomBytes(32, (err, buffer) => {
+    if(err){
+      console.log(err)
+      res.redirect('/reset');
+    }
+
+    const email = req.body.email
+    const token = buffer.toString('hex');
+    User.findOne({email: email})
+    .then(user => {
+      if(!user){
+        req.flash('error', 'No account with this email found!');
+        return res.redirect('/reset');
+      }
+      user.resetToken = token;
+      user.resetTokenExpiration = Date.now() + 3600000;
+      return user.save();
+    })
+    .then(result => {
+      
+      res.redirect('/login');
+
+      const message = {
+        to: email,
+        from: 'ddsmmf@gmail.com', // this email must be the SAME of SENDGRID!!!!!
+        subject: 'Password reset',
+        text: 'some text here!',
+        html: `
+        <h1> You requested a password reset </h1>
+        <p> Click this <a href="http://localhost:3000/reset/${token}">LINK</a> to set a new password. </p>
+        `
+      }
+
+      sendgridMailer.send(message)
+      .then( result => {
+        console.log('Email Sent')
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+    })
+    .catch(err => {
+      console.log(err);
+    });    
+
+  })
 }
