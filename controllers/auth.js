@@ -8,6 +8,8 @@ const sendgridMailer = require('@sendgrid/mail');
 
 sendgridMailer.setApiKey('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');
 
+const { validationResult } = require('express-validator');
+
 exports.getLogin = (req, res, next) => {
 
   let message = req.flash('error');
@@ -69,6 +71,12 @@ exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
+  const errors = validationResult(req);
+
+  if(!errors.isEmpty()){
+    console.log(errors.array())
+    return res.status(422).render('auth/signup', { docTitle: 'Signup', path: '/signup', errorMessage: errors.array()[0].msg })
+  }
 
   User.findOne({ email: email })
     .then(docUser => {
