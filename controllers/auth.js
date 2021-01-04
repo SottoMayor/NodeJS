@@ -198,7 +198,8 @@ exports.getNewPassword = (req, res, next) => {
       docTitle: 'New Password',
       path: '/new-password',
       errorMessage: message,
-      userId: user._id.toString()
+      userId: user._id.toString(),
+      passwordToken: token
     })
   })
   .catch(err => {
@@ -208,5 +209,44 @@ exports.getNewPassword = (req, res, next) => {
 }
 
 exports.postNewPassword = (req, res, next) => {
+  const email = req.body.email;
+  const newPassword = req.body.password;
+  const userId = req.body.userId;
+  const passwordToken = req.body.passwordToken;
+  let resetUser;
 
+  User.findOne({resetToken: passwordToken, resetTokenExpiration: {$gt: Date.now()}, _id: userId})
+  .then( user => {
+    resetUser = user;
+    return bcrypt.hash(newPassword, 12);
+  })
+  .then(cryptPassword => {
+    resetUser.password = cryptPassword;
+    resetUser.resetToken = undefined;
+    resetUser.resetTokenExpiration = undefined;
+    return resetUser.save();
+  })
+  .then(() => {
+    res.redirect('/login');
+
+    const message = {
+      to: email,
+      from: 'ddsmmf@gmail.com', // this email must be the SAME of SENDGRID!!!!!
+      subject: 'Password reset succesfully!',
+      text: 'some text here!',
+      html: `
+      <h1> Password reset succesfully!</h1>
+      <p> click <a href='http://localhost:3000/login' > here </a>  to access the page! </p>
+      `
+    }
+
+    sendgridMailer.send(message)
+    .then( result => {
+      console.log('Email Sent')
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
+  })
 }
