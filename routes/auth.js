@@ -21,7 +21,14 @@ router.post('/signup',
         return true;
     }),
     body('password', 'Please enter a password with only number and text and at leaste 5 characters')
-    .isLength({min: 6}).isAlphanumeric()
+    .isLength({min: 6}).isAlphanumeric(),
+    body('confirmPassword')
+    .custom((value, {req}) => {
+        if(value !== req.body.password){
+            throw new Error('The passwords have to match!');
+        }
+        return true;
+    })
 
 ],
 authController.postSignup);
