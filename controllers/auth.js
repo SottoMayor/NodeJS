@@ -24,6 +24,12 @@ exports.getLogin = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
+  const errors = validationResult(req);
+
+  if(!errors.isEmpty()){
+    return res.status(422).render('auth/login', { docTitle: 'Login', path: '/login', errorMessage: errors.array()[0].msg })
+  }
+
   User.findOne({ email: email })
     .then(user => {
       if (!user) {
@@ -64,7 +70,7 @@ exports.getSignup = (req, res, next) => {
   } else {
     message = null;
   }
-  res.render('auth/signup', { docTitle: 'Signup', path: '/signup', errorMessage: message })
+  res.render('auth/signup', { docTitle: 'Signup', path: '/signup', errorMessage: message, oldInput: {email: '', password: '', confirmPassword: ''} })
 }
 
 exports.postSignup = (req, res, next) => {
@@ -75,47 +81,39 @@ exports.postSignup = (req, res, next) => {
 
   if(!errors.isEmpty()){
     console.log(errors.array())
-    return res.status(422).render('auth/signup', { docTitle: 'Signup', path: '/signup', errorMessage: errors.array()[0].msg })
+    return res.status(422)
+    .render('auth/signup', {
+       docTitle: 'Signup', path: '/signup', errorMessage: errors.array()[0].msg, oldInput: {email: email, password: password, confirmPassword: confirmPassword}
+       })
   }
 
-  User.findOne({ email: email })
-    .then(docUser => {
-      if (docUser) {
-        req.flash('error', 'This user already exists!');
-        return res.redirect('/signup');
-      };
+  bcrypt.hash(password, 12)
+    .then(cryptPassword => {
+      const user = new User({ email: email, password: cryptPassword, cart: { items: [] } });
+      return user.save();
+    })
+    .then(() => {
+      res.redirect('/login');
 
-      return bcrypt.hash(password, 12)
-        .then(cryptPassword => {
-          const user = new User({ email: email, password: cryptPassword, cart: { items: [] } });
-          return user.save();
-        })
-        .then(() => {
-          res.redirect('/login');
+      const message = {
+        to: email,
+        from: 'ddsmmf@gmail.com', // this email must be the SAME of SENDGRID!!!!!
+        subject: 'Signup succeeded!',
+        text: 'some text here!',
+        html: `
+        <h1> You successfully sign up! </h1>
+        <p> Thank you son! </p>
+        `
+      }
 
-          const message = {
-            to: email,
-            from: 'ddsmmf@gmail.com', // this email must be the SAME of SENDGRID!!!!!
-            subject: 'Signup succeeded!',
-            text: 'some text here!',
-            html: `
-            <h1> You successfully sign up! </h1>
-            <p> Thank you son! </p>
-            `
-          }
+      sendgridMailer.send(message)
+      .then( result => {
+        console.log('Email Sent')
+      })
+      .catch(err => {
+        console.log(err)
+      })
 
-          sendgridMailer.send(message)
-          .then( result => {
-            console.log('Email Sent')
-          })
-          .catch(err => {
-            console.log(err)
-          })
-
-        })
-        .catch(err => {
-          console.log(err);
-        });
     })
     .catch(err => {
       console.log(err);
