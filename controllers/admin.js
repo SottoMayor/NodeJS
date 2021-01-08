@@ -49,7 +49,7 @@ exports.postAddProduct = (req, res, next) => {
     console.log('Created product!');
     res.redirect('/admin/products');
     })
-  .catch( err => {console.log(err)} );
+  .catch( err => {res.redirect('/500')} );
 };
 
 

@@ -71,6 +71,7 @@ app.use(authRoutes);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/500', errorController.pageError)
 app.use(pageNotFound.pageNotFound);
 
 
