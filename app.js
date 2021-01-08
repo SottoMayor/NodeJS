@@ -2,9 +2,11 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const pageNotFound = require('./controllers/page-not-found');
+const multer = require('multer');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(multer({dest: 'images'}).single('image'));
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
