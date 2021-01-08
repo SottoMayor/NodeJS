@@ -71,8 +71,12 @@ app.use(authRoutes);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/500', errorController.pageError)
+app.get('/500', pageNotFound.pageError)
 app.use(pageNotFound.pageNotFound);
+
+app.use((error, req, res, next) => {
+    res.redirect('/500');
+}) 
 
 
 mongoose.connect(MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true })
