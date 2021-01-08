@@ -2,11 +2,22 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const pageNotFound = require('./controllers/page-not-found');
+const { v4: uuidv4 } = require('uuid');
 const multer = require('multer');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(multer({dest: 'images'}).single('image'));
+
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'images'); 
+    },
+    filename: (req, file, cb) => {
+      cb(null, uuidv4() + '-' + file.originalname);
+    },
+});
+
+app.use(multer({storage: fileStorage}).single('image'));
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
