@@ -11,7 +11,11 @@ exports.getIndex = (req, res, next) => {
       path: '/'
     })
   })
-  .catch(err => console.log(err));
+  .catch( err => {
+    const error = new Error(err);
+    err.httpStatusCode = 500;
+    return next(error);
+  } );
 
 };
 
@@ -26,7 +30,11 @@ exports.getProduct = (req, res, next) => {
       path:'/products' 
     })
   })
-  .catch(err => console.log(err));
+  .catch( err => {
+    const error = new Error(err);
+    err.httpStatusCode = 500;
+    return next(error);
+  } );
 
 };
 
@@ -40,9 +48,11 @@ exports.getProducts = (req, res, next) => {
       path: '/products'
     })
   })
-  .catch(
-    err => console.log(err)
-  );
+  .catch( err => {
+    const error = new Error(err);
+    err.httpStatusCode = 500;
+    return next(error);
+  } );
 }
 
 exports.getCart = (req, res, next) => {
@@ -54,7 +64,11 @@ exports.getCart = (req, res, next) => {
       const products = user.cart.items;
       res.render('shop/cart', { docTitle: 'Cart Page', path: '/cart', products: products});
     })
-  .catch(err => {console.log(err)});
+    .catch( err => {
+      const error = new Error(err);
+      err.httpStatusCode = 500;
+      return next(error);
+    } );
 
 };
   
@@ -78,7 +92,11 @@ exports.postCartDeleteProduct = (req, res, next) => {
     //console.log(result)
     res.redirect('/cart');
   })
-  .catch(err => {console.log(err)})
+  .catch( err => {
+    const error = new Error(err);
+    err.httpStatusCode = 500;
+    return next(error);
+  } );
 }
 
 exports.postOrder = (req, res, next) => {
@@ -104,7 +122,11 @@ exports.postOrder = (req, res, next) => {
   .then( () => {
     res.redirect('/orders');
   })
-  .catch(err => {console.log(err)})
+  .catch( err => {
+    const error = new Error(err);
+    err.httpStatusCode = 500;
+    return next(error);
+  } );
 }
 
 exports.getOrders = (req, res, next) => {
@@ -113,6 +135,10 @@ exports.getOrders = (req, res, next) => {
     res.render('shop/orders', { docTitle: 'Orders Page', path: '/orders', orders: orders,
     isAuthenticated: req.session.isLoggedIn });
   })
-  .catch(err => {console.log(err)});
+  .catch( err => {
+    const error = new Error(err);
+    err.httpStatusCode = 500;
+    return next(error);
+  } );
 }
 
