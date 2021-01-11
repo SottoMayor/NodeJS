@@ -8,4 +8,4 @@ const deleteFile = (filePath) => {
     });
 }
 
-exports.deleteFile;
+exports.deleteFile = deleteFile;
