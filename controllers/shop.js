@@ -3,10 +3,15 @@ const Order = require('../models/order');
 const fs = require('fs');
 const path = require('path');
 const PDFDocument = require('pdfkit');
+const ITEMS_PER_PAGE = 2;
 
 exports.getIndex = (req, res, next) => {
 
+  const page = req.query.page;
+
   Product.find()
+  .skip((page - 1) * ITEMS_PER_PAGE)
+  .limit(ITEMS_PER_PAGE)
   .then( products => {
     res.render('shop/index', {
       prods: products,
@@ -188,25 +193,7 @@ exports.getInvoice = (req, res, next) => {
 
     pdfDoc.end();
 
-    /*
-    fs.readFile(invoicePath, (err, data) => {
-      if(err){
-        next(err);
-      }
-
-      res.send(data);
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', 'attachment; filename="' + invoiceName + '"');
-
-    })
-    */
-
-    /*
-    const file = fs.createReadStream(invoicePath);
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename="' + invoiceName + '"');
-    file.pipe(res);
-    */
+    
   })
   
 
