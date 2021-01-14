@@ -194,6 +194,10 @@ exports.deleteProduct = (req, res, next) => {
     console.log('Product Deleted');
     res.status(200).json({message: 'Success!'});
   })
+  .then(() => {
+    // Remove product with ID from cart (sets cart items to those not matching id passed as argument)
+    req.user.removeFromCart(prodId);
+  })
   .catch( err => {
     res.status(500).json({message: 'Deleting product failed!'});
   } );

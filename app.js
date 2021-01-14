@@ -98,6 +98,7 @@ app.get('/500', pageNotFound.pageError)
 app.use(pageNotFound.pageNotFound);
 
 app.use((error, req, res, next) => {
+    //console.log(error);
     res.status(500).render('page-error', {docTitle: 'Error!', path: '/500',
     isAuthenticated: req.session.isLoggedIn});
 }) 
